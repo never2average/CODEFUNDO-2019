@@ -13,7 +13,7 @@
 
 ## How to get started?
 
-- **Voters**: Download the app for your mobile devices, bookmark elections, look at candidates and check your vote status and view live progress of public projects.
+- **Voters**: Download the app for your mobile devices, bookmark elections, look at candidates and check your vote status and view live progress of public projects promised by politicians.
 - **Others**: Download the desktop app from the executable folder and just run it.
 
 ## Technologies used
