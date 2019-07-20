@@ -12,9 +12,9 @@
 
 ## The ideas we want to implement
 
--Each voter should be able to see his vote has been counted and be able to see who he voted for. This will ensure the elections are completely transparent.
--Each candidate should be able to see the number of votes he has gotten and be able to see that in a way which doesn't expose the identity of the voters. That can be done by storing the one-way hash values of the details of each voter and storing that as a list onto the chain. So the candidate can see it and just count, but won't know who voted for him. This will eradicate the accusations of EVM tampering and vote miscounting.
--The Election Commission should be able to see how many people voted. They can use it to generate statistics for the voting numbers at each constituency. This will ensure the reliability of the elections.
+- Each voter should be able to see his vote has been counted and be able to see who he voted for. This will ensure the elections are completely transparent.
+- Each candidate should be able to see the number of votes he has gotten and be able to see that in a way which doesn't expose the identity of the voters. That can be done by storing the one-way hash values of the details of each voter and storing that as a list onto the chain. So the candidate can see it and just count, but won't know who voted for him. This will eradicate the accusations of EVM tampering and vote miscounting.
+- The Election Commission should be able to see how many people voted. They can use it to generate statistics for the voting numbers at each constituency. This will ensure the reliability of the elections.
 
 ## Architecture of the implementation
 
