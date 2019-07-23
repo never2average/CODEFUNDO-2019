@@ -20,7 +20,6 @@
 
 The following is the architecture model we are planning to have:
 - Each constituency will have a EVM which is basically a node on a private blockchain network created using Azure. There are 543 constituencies, so we will have a 544 node network (543 nodes + 1 node which is at the Election Commission office).
-- 
 
 
 ## How to get started?
