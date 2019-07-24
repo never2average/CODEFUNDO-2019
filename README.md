@@ -1,5 +1,5 @@
 
-# Secure Electronic Voting using Azure Blockchain (Microsoft codefundo++ 2019)
+# Secure Electronic Voting using Azure Blockchain 
 
 ## Our Aim
 
