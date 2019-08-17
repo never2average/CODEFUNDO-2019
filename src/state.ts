@@ -9,10 +9,12 @@ type Voter = {
 type Context = {
 	passphrase: string
 	voterlist: Voter[]
+	activeVoteChoice: number
 }
 
-const state = {
+const initialState = {
 	passphrase: '',
+	activeVoteChoice: -1,
 	voterlist: [
 		{
 			name: 'Enrique West',
@@ -65,22 +67,24 @@ function reducerFunc(state: Context, action: Dispatch) {
 				...state,
 				passphrase: payload
 			}
-		case 'UPDATE_VOTER_LIST':
+		case 'SET_CURRENT_VOTER':
 			return {
 				...state,
-				voterlist: payload
+				activeVoteChoice: payload
 			}
+		case 'RESET':
+			return initialState
 	}
 
 	return state
 }
 
 const StateProvider = createContext<{ state: Context, dispatch(obj: Dispatch): void }>({
-	state,
+	state: initialState,
 	dispatch: () => 0
 })
 
 export const Provider = StateProvider.Provider
 export const context = StateProvider
 export const reducer = reducerFunc
-export const defaultState = state
+export const defaultState = initialState

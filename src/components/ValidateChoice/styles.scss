@@ -1,0 +1,17 @@
+#validate {
+	width: 600px;
+	margin: 10px auto;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	text-align: center;
+}
+
+#qr-code {
+	margin: 30px;
+}
+
+#qr-code.done {
+	filter: blur(15px)
+}

@@ -1,10 +1,12 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { TextField, Button } from '@material-ui/core'
 import './styles.scss'
 import { context } from '../../state';
 
 type Props = {
 	next(): void
+	disableNext(): void
+	enableNext(): void
 }
 
 const Verification: React.FC<Props> = props => {
@@ -15,6 +17,11 @@ const Verification: React.FC<Props> = props => {
 	const [isValidated, setIsValidated] = useState<boolean>(false)
 	const [error, setError] = useState<string>('')
 	const [profilePic, setProfilePic] = useState<string>('/images/dummy.jpg')
+
+	useEffect(() => {
+		props.disableNext()
+		return () => props.enableNext()
+	}, [])
 
 	function validatePassphrase() {
 		if(passphrase === '123456') {
@@ -42,11 +49,12 @@ const Verification: React.FC<Props> = props => {
 				value={passphrase}
 				onChange={e => setPassphrase(e.target.value)}
 				margin="normal"
+				autoComplete="off"
 				disabled={isValidated}
 				variant="filled"
 			/>
 			<Button
-				id="validate"
+				id="validate-button"
 				variant="contained"
 				onClick={validatePassphrase}
 				disabled={isValidated}
