@@ -1,7 +1,8 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { TextField, Button } from '@material-ui/core'
 import './styles.scss'
-import { context } from '../../state';
+import { context } from '../../state'
+import fetch from '../../fetch'
 
 type Props = {
 	next(): void
@@ -18,13 +19,26 @@ const Verification: React.FC<Props> = props => {
 	const [error, setError] = useState<string>('')
 	const [profilePic, setProfilePic] = useState<string>('/images/dummy.jpg')
 
+	const [busy, setBusy] = useState<boolean>(false)
+
 	useEffect(() => {
 		props.disableNext()
 		return () => props.enableNext()
 	}, [])
 
-	function validatePassphrase() {
-		if(passphrase === '123456') {
+	async function validatePassphrase() {
+		setError('')
+		setBusy(true)
+
+		const res = await fetch(`http://40.114.1.168/passphrase`, {
+			body: JSON.stringify({
+				passphrase
+			})
+		})
+
+		setBusy(false)
+
+		if(res.status) {
 			setIsValidated(true)
 			setProfilePic('/images/person.jpg')
 			dispatch({ type: 'UPDATE_PASSPHRASE', payload: passphrase })
@@ -50,16 +64,16 @@ const Verification: React.FC<Props> = props => {
 				onChange={e => setPassphrase(e.target.value)}
 				margin="normal"
 				autoComplete="off"
-				disabled={isValidated}
+				disabled={isValidated || busy}
 				variant="filled"
 			/>
 			<Button
 				id="validate-button"
 				variant="contained"
 				onClick={validatePassphrase}
-				disabled={isValidated}
+				disabled={isValidated || busy}
 				color="primary">
-				Validate
+				{ busy ? 'Please wait...' : 'Verify'}
 			</Button>
 		</div>
 	</div>

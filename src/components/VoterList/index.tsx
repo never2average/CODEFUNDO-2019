@@ -14,6 +14,14 @@ const VoterList: React.FC<Props> = props => {
 	const [voterlist, setVoterlist] = useState(state.voterlist)
 
 	useEffect(() => {
+		if(state.activeVoteChoice !== -1) {
+			const list = JSON.parse(JSON.stringify(voterlist))
+			list[state.activeVoteChoice].checked = true
+			setVoterlist(list)
+		}
+	}, [])
+
+	useEffect(() => {
 		if(state.activeVoteChoice === -1) {
 			props.disableNext()
 		} else {
