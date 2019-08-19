@@ -5,6 +5,11 @@ contract CodeFunDo{
 
 address admin;
 
+//State Declaration
+enum StateType { PreVoting, Voting, PostVoting} //Too store what stage of the election is currently going on
+StateType public  State;
+
+//Only Admin modifier
 modifier onlyAdmin() {
     require (msg.sender==admin);
     _;
@@ -29,14 +34,28 @@ struct voteDetails{
   constructor() public {
     //initialise admin credentials
     admin=msg.sender;
+    State=StateType.PreVoting;//Making the state of the voting the pre-voting state
   }
   
   function addVoter(uint32 _voterid) onlyAdmin public returns (bool){ // Add a voter to the eligible voters list
+    if(State!=StateType.PreVoting)
+    {
+        return false;// Cannot add new voters unless it is pre voting season
+    }
       isValidVoter[_voterid]=true;
       return true;
   }
   
+  function startVoting() onlyAdmin public returns (bool){ //Function to indicate the start of voting season
+      State=StateType.Voting;
+      return true;
+  }
+  
   function vote (uint256 _randomVariable,uint32 _timestamp,uint16 _candidateID,uint32 _voterid) public returns (uint8){ //Actually vote
+      if(State!=StateType.Voting)
+        {
+            return 3;//code for if voting season has not begun
+        }
       if(isValidVoter[_voterid]==false)
       {
           return 1;//code for voter is not a valid voter or is not registered to vote in this election
@@ -51,7 +70,16 @@ struct voteDetails{
       return 0;//code for successful vote
   }
   
+  function endVoting() onlyAdmin public returns (bool){ //Function to indicate the end of voting season
+      State=StateType.PostVoting;
+      return true;
+  }
+  
   function resultOfElection(uint16 _candidateID) public onlyAdmin view returns (uint32){ //Can be called only after the elections are over by the admin
+  if(State!=StateType.PostVoting)
+        {
+            return 999999999;//code for if voting season has not ended
+        }
       return voteCounter[_candidateID];
   }
   
