@@ -1,44 +1,45 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+# Secure Electronic Voting using Azure Blockchain 
 
-In the project directory, you can run:
+## Our Aim
 
-### `npm start`
+We aim to tackle two issues which plague the current system of Electronic Voting Machines,
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+ 1. Delayed vote counting and result declaration - The whole 2019 Lok Sabha Election process took just over 2 months to complete. We believe this can be accelerated using Blockchain
+ 2. Accusations of tampering EVMs - By using properties of immutability of blockchains, we believe EVMs can be made virtually tamper-proof.
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+## Proposed Stages
 
-### `npm test`
+We want our election Proof-of-Concept to be modelled around the following stages:
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Before Polling Day
+####  Voter Verification:
+- First, we need to verify the person through aadhar card or voter ID card API available here: https://electoralsearch.in/ 
+- Secondly, a picture of the person will be taken, which will be used later on.
+- Then, a public-private keypair for the voter will be generated, which essentially registers the voter on the chain as a valid voter.
+- Finally, the person would be granted a secret passphrase (generated from the private key)required to vote at the voting camp.
+### On Polling Day
+#### To Enter the Voting Camp:
+- On entering voting camp, a facial ID recognition camera (even sub-10,000 Rupee smartphones have this technology nowadays) is used to verify the identity of the person through already available voter ID image. 
+- In case the photo verification fails because of not able to recognize the person, there would be an official person sitting there to manually verify the identity of the voter. That person will also be added to a separate list, which houses the names of the people whose voter ID photos need to be updated.
+#### At the EVM:
+- If verification succeeds, the person is then prompted to put their secret passphrase and is now able to cast vote.
+### After Polling Day
+- After the election is over, there will be a companion app which voters will be able to use to check the validity of the vote and the results of the election.
 
-### `npm run build`
+## Characteristics of our project
+We aim to implement the following features to make our system secure, reliable, and transparent.
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Each voter should be able to see his vote has been counted and be able to see who he voted for. This will ensure the elections are completely transparent.
+- Each candidate should be able to see the number of votes he has gotten and be able to see that in a way which doesn't expose the identity of the voters. That can be done by storing the one-way hash values of the details of each voter and storing that as a list onto the chain. So the candidate can see it and just count, but won't know who voted for him. This will eradicate the accusations of EVM tampering and vote miscounting.
+- The Election Commission should be able to see how many people voted. They can use it to generate statistics for the voting numbers at each constituency. This will ensure the reliability of the elections.
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+## Architecture of the Blockchain Implementation
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+The following is the architecture model we are planning to have:
+- Each constituency will have a EVM which is basically a node on a private blockchain network created using Azure. There are 543 constituencies, so we will have a 544 node network (543 nodes + 1 node which is at the Election Commission office).
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Technologies used
+- Azure Blockchain Workbench
+- Azure Pipelines and Functions
+- Azure Table storage + SQL Database Manager
