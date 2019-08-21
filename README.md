@@ -2,7 +2,7 @@
 
 # Secure Electronic Voting using Azure Blockchain 
 
-## [How to use it?](https://github.com/never2average/CODEFUNDO-2019/blob/master/HowToUse.md)
+## [How to use it / How to contribute to it?](https://github.com/never2average/CODEFUNDO-2019/blob/master/HowToUse.md)
 
 ## Our Aim
 
