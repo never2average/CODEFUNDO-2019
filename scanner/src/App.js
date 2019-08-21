@@ -2,8 +2,11 @@ import React, { useState, useRef } from 'react'
 import './App.css'
 import QrReader from 'react-qr-reader'
 
-const endpoint = 'https://901da02f.ngrok.io'
+const endpoint = 'https://codefundo2019.tk'
 
+// Problems solved: 
+// 1. Tamper proofing voting system
+// 2. Digitizing voting mechanism
 
 function App() {
 

@@ -1,8 +1,10 @@
+const prod = process.env.NODE_ENV === 'PRODUCTION'
+
 const Web3 = require('web3')
 const express = require('express')
 const web3 = new Web3('ws://localhost:7545')
-const abi = require('../../Desktop/tempblockchain/build/contracts/CodeFunDo.json')
-
+const abi = require(prod ? './CodeFunDo.json' : '../../Desktop/tempblockchain/build/contracts/CodeFunDo.json')
+const path = require('path')
 const app = express()
 const cors = require('cors')
 const bodyParser = require('body-parser')
@@ -53,6 +55,10 @@ web3.eth.getAccounts().then(async addresses => {
 })
 
 const pendingVotes = []
+
+app.get('/', (req, res) => {
+	res.sendFile(path.join(__dirname, '../frontend/index.html'))
+})
 
 app.get('/contract-address', (req, res) => {
 	res.json({ address: contractAddress })
