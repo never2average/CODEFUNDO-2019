@@ -39,11 +39,11 @@ const Verification: React.FC<Props> = props => {
 
 		setBusy(false)
 
-		const { status, image } = res
+		const { status, data } = res
 
 		if(res.status === 'ok') {
 			setIsValidated(true)
-			setProfilePic(image)
+			setProfilePic(data.photo)
 			dispatch({ type: 'UPDATE_PASSPHRASE', payload: passphrase })
 			setTimeout(props.next, 1000)
 

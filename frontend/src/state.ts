@@ -15,43 +15,7 @@ type Context = {
 const initialState = {
 	passphrase: '',
 	activeVoteChoice: -1,
-	voterlist: [
-		{
-			name: 'Enrique West',
-			image: 1,
-			checked: false
-		},
-		{
-			name: 'Damien Braun',
-			image: 2,
-			checked: false
-		},
-		{
-			name: 'Ellie Osborne',
-			image: 3,
-			checked: false
-		},
-		{
-			name: 'Cierra Vega',
-			image: 4,
-			checked: false
-		},
-		{
-			name: 'Alden Cantrell',
-			image: 5,
-			checked: false
-		},
-		{
-			name: 'Kierra Gentry',
-			image: 6,
-			checked: false
-		},
-		{
-			name: 'Pierre Cox',
-			image: 7,
-			checked: false
-		}
-	]
+	voterlist: []
 }
 
 type Dispatch = {
@@ -62,7 +26,7 @@ type Dispatch = {
 function reducerFunc(state: Context, action: Dispatch) {
 	const { type, payload } = action
 	switch(type) {
-		case 'CHANGE_PASSPHRASE':
+		case 'UPDATE_PASSPHRASE':
 			return {
 				...state,
 				passphrase: payload
@@ -74,6 +38,11 @@ function reducerFunc(state: Context, action: Dispatch) {
 			}
 		case 'RESET':
 			return initialState
+		case 'UPDATE_VOTER_LIST':
+			return {
+				...state,
+				voterlist: payload
+			}
 	}
 
 	return state

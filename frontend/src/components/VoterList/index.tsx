@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from 'react'
 import { List, ListItem, ListItemAvatar, Avatar, ListItemText, ListItemSecondaryAction, Checkbox } from '@material-ui/core'
 import './styles.scss'
 import { context } from '../../state'
+import { endpoint } from '../../config';
 
 type Props = {
 	disableNext(): void
@@ -19,6 +20,12 @@ const VoterList: React.FC<Props> = props => {
 			list[state.activeVoteChoice].checked = true
 			setVoterlist(list)
 		}
+	}, [])
+
+	useEffect(() => {
+		fetch(`${endpoint}/voter-list`).then(res => res.json()).then(res => {
+			dispatch({ type: 'UPDATE_VOTER_LIST', payload: res.list })
+		})
 	}, [])
 
 	useEffect(() => {

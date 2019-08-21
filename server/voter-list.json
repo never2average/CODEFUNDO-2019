@@ -1,0 +1,46 @@
+{
+	"list": [
+		{
+			"name": "Enrique West",
+			"image": 1,
+			"id": 100,
+			"checked": false
+		},
+		{
+			"name": "Damien Braun",
+			"image": 2,
+			"id": 101,
+			"checked": false
+		},
+		{
+			"name": "Ellie Osborne",
+			"image": 3,
+			"id": 102,
+			"checked": false
+		},
+		{
+			"name": "Cierra Vega",
+			"image": 4,
+			"id": 103,
+			"checked": false
+		},
+		{
+			"name": "Alden Cantrell",
+			"image": 5,
+			"id": 104,
+			"checked": false
+		},
+		{
+			"name": "Kierra Gentry",
+			"image": 6,
+			"id": 105,
+			"checked": false
+		},
+		{
+			"name": "Pierre Cox",
+			"image": 7,
+			"id": 106,
+			"checked": false
+		}
+	]
+}
