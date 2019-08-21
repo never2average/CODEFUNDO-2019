@@ -12,6 +12,8 @@ const voterList = require('./voter-list.json')
 app.use(bodyParser.json())
 app.use(cors())
 
+const contractAddress = '0xB29BeAF61ce30c35F3D3407870531eba1F4CE440'
+
 const map = {
 	'ABCD': {
 		photo: 'https://files.brightside.me/files/news/part_22/223005/preview-6210455-650x341-98-1508149182.jpg',
@@ -39,33 +41,34 @@ web3.eth.getAccounts().then(async addresses => {
 	//console.log(addresses)
 	web3.eth.defaultAccount = addresses[0]
 	adminAddr = addresses[0]
-	const { methods } = new web3.eth.Contract(abi.abi, '0xedCa809E513942B95D25e79069bBf99F8ef5D940')
+	const { methods } = new web3.eth.Contract(abi.abi, contractAddress)
 	contract = methods
 	
-	await contract.addVoter(0x1234).send({ from: adminAddr, gas: '500000' })
-	await contract.addVoter(0x4567).send({ from: adminAddr,  gas: '500000' })
-	await contract.addVoter(0x891011).send({ from: adminAddr,  gas: '500000' })
-	
-	await contract.startVoting().send({ from: adminAddr,  gas: '500000' })
-	console.log(await contract.vote(104, 1, 12, 0x891011).call())
+	const arr = Object.keys(map)
 
-	await contract.vote(100, 1, 10, 0x1234).send({ from: adminAddr,  gas: '500000' })
-	await contract.vote(102, 1, 11, 0x4567).send({ from: adminAddr,  gas: '500000' })
-	await contract.vote(104, 1, 12, 0x891011).send({ from: adminAddr,  gas: '500000' })
-
+	for(let i=0;i<arr.length;i++) {
+		const id = map[arr[i]].id
+		await contract.addVoter(id).send({ from: adminAddr, gas: '500000' })
+	}
 })
 
 const pendingVotes = []
 
+app.get('/contract-address', (req, res) => {
+	res.json({ address: contractAddress })
+})
+
 app.get('/get-stage', async (req, res) => {
-	const stage = await contract.getCurrentStage()
+	const stage = parseInt(await contract.getCurrentStage().call(), 10)
+
+
 	switch(stage) {
 		case 0:
 			return res.json({ stage: 'PREVOTING' })
 		case 1:
 			return res.json({ stage: 'VOTING' })
 		case 2:
-			return res.json({ status: 'POSTVOTING' })
+			return res.json({ stage: 'POSTVOTING' })
 	}
 })
 
@@ -83,17 +86,22 @@ app.get('/endvoting', async (req, res) => {
 })
 
 
-
-app.post('/passphrase', (req, res) => {
+app.post('/passphrase', async (req, res) => {
 	try {
 		const { passphrase } = req.body
 		
 		if(!map[passphrase]) throw new Error('Not Found')
+
+		const hasVoted = await contract.hasVotedOrNot(map[passphrase].id).call()
+
+		if(hasVoted) {
+			return res.json({ status: 'error', message: 'Already voted' })
+		}
 		
-		return res.json({ status: 'ok', image: map[passphrase] })
+		return res.json({ status: 'ok', data: map[passphrase] })
 		
 	} catch(error) {
-		return res.json({ status: 'error', image: null })
+		return res.json({ status: 'error', message: 'Incorrect ID' })
 	}
 })
 
@@ -107,15 +115,30 @@ app.post('/validate-vote', async (req, res) => {
 		console.log(`Attempting to validate vote`)
 
 		const { random, sessionID } = req.body
-		const vote = pendingVotes.find(e => e.random === random && e.sessionID === sessionID)
+		const voteIndex = pendingVotes.findIndex(e => e.random === random && e.sessionID === sessionID)
+		const vote = pendingVotes[voteIndex]
 
 		if(!vote) throw new Error('Not found')
-
+		
 		vote.isVerified = true
 
+
+		setTimeout(() => {
+			// remove vote from pending after 10 seconds
+			pendingVotes.splice(voteIndex, 1)
+
+			console.log(`Pending votes now `, pendingVotes)
+		}, 10*1000)
+		
 		const candidate = voterList.list.find(t => t.name === vote.voter)
 
+		console.log(`Voting for candidate ${candidate.id} - ${map[vote.passphrase].id}`)
+
+		console.log('Vote call before', await contract.vote(random, new Date().getTime(), candidate.id, map[vote.passphrase].id).call())
+
 		await contract.vote(random, new Date().getTime(), candidate.id, map[vote.passphrase].id).send({ from: adminAddr,  gas: '500000' })
+		
+		console.log('Vote call after', await contract.vote(random, new Date().getTime(), candidate.id, map[vote.passphrase].id).call())
 
 		return res.json({ status: 'ok' })
 	} catch(error) {
@@ -167,7 +190,23 @@ app.post('/submit-vote', (req, res) => {
 	}
 })
 
+app.get('/results', async (req, res) => {
 
+	const candidates = voterList.list
+
+	const results = {}
+
+	for(let i=0;i<candidates.length;i++) {
+		const candidate = candidates[i]
+
+		console.log(`ID: ${candidate.id}`)
+
+		const votes = await contract.resultOfElection(candidate.id).call()
+		results[candidate.name] = votes
+	}
+
+	res.json(results)
+})
 
 
 app.listen(3001, () => console.log(`Server up`))

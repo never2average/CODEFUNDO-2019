@@ -23,6 +23,10 @@ const VoterList: React.FC<Props> = props => {
 	}, [])
 
 	useEffect(() => {
+		setVoterlist(state.voterlist)
+	}, [state.voterlist])
+
+	useEffect(() => {
 		fetch(`${endpoint}/voter-list`).then(res => res.json()).then(res => {
 			dispatch({ type: 'UPDATE_VOTER_LIST', payload: res.list })
 		})

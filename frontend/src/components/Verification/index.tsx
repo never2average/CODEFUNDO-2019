@@ -47,8 +47,8 @@ const Verification: React.FC<Props> = props => {
 			dispatch({ type: 'UPDATE_PASSPHRASE', payload: passphrase })
 			setTimeout(props.next, 1000)
 
-		} else {
-			setError('Incorrect passphrase')
+		} else if(res.status === 'error') {
+			setError(res.message)	
 		}
 	}
 
