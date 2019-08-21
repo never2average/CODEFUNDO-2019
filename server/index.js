@@ -32,6 +32,18 @@ const map = {
 	'MNOP': {
 		photo: 'https://inspiredot.net/wp-content/uploads/2018/10/Top-30-Most-Beautiful-Women-in-the-World-13-800x450.jpg',
 		id: 3
+	},
+	'PRIYESH': {
+		photo: 'https://i.stack.imgur.com/RGBdi.jpg',
+		id: 4
+	},
+	'ATHARV': {
+		photo: 'https://i.stack.imgur.com/mc059.jpg',
+		id: 5
+	},
+	'MEHUL': {
+		photo: 'https://avatars3.githubusercontent.com/u/10388889?s=460&v=4',
+		id: 6
 	}
 }
 
