@@ -70,6 +70,10 @@ struct voteDetails{
       return 0;//code for successful vote
   }
   
+  function hasVotedOrNot(uint32 _voterid) public view returns (bool){
+      return voted[_voterid];
+  }
+  
   function endVoting() onlyAdmin public returns (bool){ //Function to indicate the end of voting season
       State=StateType.PostVoting;
       return true;
