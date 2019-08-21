@@ -29,7 +29,15 @@ struct voteDetails{
   
   //2D Array to store votes
   uint32[10000] voteCounter; //Assuming 10000 total candidates contest in that year's election
-
+  
+  //Events
+  event evoterAdded(uint32 voterID);
+  event evotingstarted();
+  event evotervoted(uint32 voterID);
+  event evotingended();
+  event eresult(uint16 candidateID,uint32 votes);
+  
+  
   //constructor
   constructor() public {
     //initialise admin credentials
@@ -43,11 +51,13 @@ struct voteDetails{
         return false;// Cannot add new voters unless it is pre voting season
     }
       isValidVoter[_voterid]=true;
+      emit evoterAdded(_voterid);
       return true;
   }
   
   function startVoting() onlyAdmin public returns (bool){ //Function to indicate the start of voting season
       State=StateType.Voting;
+      emit evotingstarted();
       return true;
   }
   
@@ -67,19 +77,26 @@ struct voteDetails{
       voteList[_randomVariable]=voteDetails(_timestamp,_candidateID,_voterid);
       voted[_voterid]=true;
       voteCounter[_candidateID]++;
+      emit evotervoted(_voterid);
       return 0;//code for successful vote
+  }
+  
+  function hasVotedOrNot(uint32 _voterid) public view returns (bool){
+      return voted[_voterid];
   }
   
   function endVoting() onlyAdmin public returns (bool){ //Function to indicate the end of voting season
       State=StateType.PostVoting;
+      emit evotingended();
       return true;
   }
   
-  function resultOfElection(uint16 _candidateID) public onlyAdmin view returns (uint32){ //Can be called only after the elections are over by the admin
+  function resultOfElection(uint16 _candidateID) public returns (uint32){ //Can be called only after the elections are over by the admin
   if(State!=StateType.PostVoting)
         {
             return 999999999;//code for if voting season has not ended
         }
+        emit eresult(_candidateID,voteCounter[_candidateID]);
       return voteCounter[_candidateID];
   }
   
