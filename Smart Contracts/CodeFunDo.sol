@@ -45,6 +45,21 @@ struct voteDetails{
     State=StateType.PreVoting;//Making the state of the voting the pre-voting state
   }
   
+  function getCurrentStage() public view returns (uint8){
+      if(State==StateType.PreVoting)
+    {
+        return 0; // Current Stage of voting is pre-voting
+    }
+    if(State==StateType.Voting)
+    {
+        return 1; // Current Stage of voting is voting
+    }
+    if(State==StateType.PostVoting)
+    {
+        return 2; // Current Stage of voting is post-voting
+    }
+  }
+  
   function addVoter(uint32 _voterid) onlyAdmin public returns (bool){ // Add a voter to the eligible voters list
     if(State!=StateType.PreVoting)
     {
