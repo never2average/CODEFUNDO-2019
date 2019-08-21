@@ -4,7 +4,7 @@
 - **Step 2**: On supplying his pass-phrase, the portal will show a list of candidates from the constituency the voter is in. He will be able to choose one candidate to vote for.<br/> ![Page 2](https://user-images.githubusercontent.com/29022394/63441239-b97d4a80-c44e-11e9-9154-d200c9a06363.png)<br />
 - **Step 3**: A confirmation page will pop up with the name and face of the candidate. The user will confirm his choice or be able to go back.<br/>![Page 3](https://user-images.githubusercontent.com/29022394/63441240-b97d4a80-c44e-11e9-9dc3-08aa28e2a479.png)<br/>
 - **Step 4**: A QR code will be presented to the voter. ![Page 4](https://user-images.githubusercontent.com/29022394/63441241-ba15e100-c44e-11e9-80a9-ede037b2ff4b.png)
-### The voter can then use the camera on his phone to confirm whether that vote is truly his. The voter must go to https://codefundo2019.tk/scanner/
+### The voter must then use his phone to confirm the vote. The voter must go to https://codefundo2019.tk/scanner/ and scan the presented QR code using the camera on his phone
 
 This ensures that the EVM has not been tampered with. Once that is confirmed, a confirmatory message is shown<br/>![Page 5](https://user-images.githubusercontent.com/29022394/63441242-ba15e100-c44e-11e9-9304-b36d118cd6a5.png)
 <br/>
