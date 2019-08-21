@@ -3,6 +3,7 @@ import { TextField, Button } from '@material-ui/core'
 import './styles.scss'
 import { context } from '../../state'
 import fetch from '../../fetch'
+import { endpoint } from '../../config'
 
 type Props = {
 	next(): void
@@ -30,7 +31,7 @@ const Verification: React.FC<Props> = props => {
 		setError('')
 		setBusy(true)
 
-		const res = await fetch(`http://40.114.1.168/passphrase`, {
+		const res = await fetch(`${endpoint}/passphrase`, {
 			body: JSON.stringify({
 				passphrase
 			})
@@ -38,9 +39,11 @@ const Verification: React.FC<Props> = props => {
 
 		setBusy(false)
 
-		if(res.status) {
+		const { status, image } = res
+
+		if(res.status === 'ok') {
 			setIsValidated(true)
-			setProfilePic('/images/person.jpg')
+			setProfilePic(image)
 			dispatch({ type: 'UPDATE_PASSPHRASE', payload: passphrase })
 			setTimeout(props.next, 1000)
 
@@ -61,7 +64,7 @@ const Verification: React.FC<Props> = props => {
 				id="passphrase-field"
 				label="Passphrase"
 				value={passphrase}
-				onChange={e => setPassphrase(e.target.value)}
+				onChange={e => setPassphrase(e.target.value.toUpperCase())}
 				margin="normal"
 				autoComplete="off"
 				disabled={isValidated || busy}
