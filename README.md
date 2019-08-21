@@ -2,7 +2,7 @@
 
 # Secure Electronic Voting using Azure Blockchain 
 
-## ![How to use it?]()
+## [How to use it?]()
 
 ## Our Aim
 
