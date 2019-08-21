@@ -2,6 +2,8 @@
 
 # Secure Electronic Voting using Azure Blockchain 
 
+## ![](How to use it?)
+
 ## Our Aim
 
 We aim to tackle two issues which plague the current system of Electronic Voting Machines,
