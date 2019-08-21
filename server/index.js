@@ -3,7 +3,7 @@ const prod = process.env.NODE_ENV === 'PRODUCTION'
 const Web3 = require('web3')
 const express = require('express')
 const web3 = new Web3('ws://localhost:7545')
-const abi = require(prod ? './CodeFunDo.json' : '../../Desktop/tempblockchain/build/contracts/CodeFunDo.json')
+const abi = require(prod ? './CodeFunDo.json' : '../tempblockchain/build/contracts/CodeFunDo.json')
 const path = require('path')
 const app = express()
 const cors = require('cors')
