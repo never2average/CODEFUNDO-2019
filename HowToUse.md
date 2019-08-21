@@ -22,6 +22,6 @@
 
 - Copy the contract address of the 2_deploy_contracts.js file
 
-- replace the contract address in [server/index.js](https://github.com/never2average/CODEFUNDO-2019/tree/master/server) file
+- Replace the contract address in [server/index.js](https://github.com/never2average/CODEFUNDO-2019/tree/master/server) file
 
 - Run like a normal js server file.
