@@ -1,7 +1,7 @@
 
 
-
 # The Smart Contract
+
 
 ## Functionalities provided
 We have provided the following functionalities to our voting system using the Smart Contract:
@@ -13,7 +13,9 @@ We have provided the following functionalities to our voting system using the Sm
   2 - Current Stage of the process is post-voting
   
 ### 2.  addVoter
-Adds a valid voter to the mapping of eligible voters. Takes the ID of the voter as a parameter. Returns true if the voter has been successfully added. It returns false if the voting process is not at the Pre-Voting Stage.
+Adds a valid voter to the mapping of eligible voters. Takes the ID of the voter as a parameter. Returns true if the voter has been successfully added. It returns false in the following cases:
+
+ - If the voting process is not at the Pre-Voting Stage
  
  ### 3. vote
  Allows a valid voter to vote. Takes the following parameters:

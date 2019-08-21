@@ -2,6 +2,8 @@
 
 # Secure Electronic Voting using Azure Blockchain 
 
+## [How to use it / How to contribute to it?](https://github.com/never2average/CODEFUNDO-2019/blob/master/HowToUse.md)
+
 ## Our Aim
 
 We aim to tackle two issues which plague the current system of Electronic Voting Machines,
@@ -24,7 +26,8 @@ Once voter-verification for all the voters is done, a function will be called on
 - **Step 1**: On entering voting camp, the EVM will have our portal open, where the voter will have to enter the pass-phrase given to him in the pre-voting phase
 - **Step 2**: On supplying his pass-phrase, the portal will show a list of candidates from the constituency the voter is in. He will be able to choose one candidate to vote for.
 - **Step 3**: A confirmation page will pop up with the name and face of the candidate. The user will confirm his choice or be able to go back.
-- **Step 4**: A QR code will be presented to the voter. The voter can then use the camera on his phone to confirm whether that vote is truly his. This ensures that the EVM has not been tampered with. Once that is confirmed, a confirmatory message is shown<br/>
+- **Step 4**: A QR code will be presented to the voter. The voter can then use the camera on his phone to confirm whether that vote is truly his. This ensures that the EVM has not been tampered with. Once that is confirmed, a confirmatory message is shown.
+
 Once polling days are over, another function will be called on the smart contract to ensure it stops accepting any further vote requests by voters .
 ### After Polling Day
 - After the election is over, the blockchain will be made public and voters will be able to see their transaction.
