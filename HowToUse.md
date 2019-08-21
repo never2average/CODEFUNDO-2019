@@ -27,4 +27,4 @@ This ensures that the EVM has not been tampered with. Once that is confirmed, a 
 
 - Replace the contract address in [server/index.js](https://github.com/never2average/CODEFUNDO-2019/tree/master/server) file
 
-- Run like a normal js server file.
+- **node index.js**
